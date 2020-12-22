@@ -1,0 +1,207 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MediData Blockchain Technology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="images/icon/favicon.ico">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/metisMenu.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+	<!-- others css -->
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/default-css.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+    .error{
+      color: red;
+    }
+    </style>
+    <!-- modernizr css -->
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+	<script src="https://kit.fontawesome.com/dab481675a.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+</head>
+
+<body ng-app="Medidata">
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- page container area start -->
+    <div class="page-container"  ng-controller="MainController">
+        <!-- sidebar menu area start -->
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <!--a href="#"><h3>MediData Blockchain Technology</h3></a-->
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                  <nav>
+                      <ul class="metismenu" id="menu">
+                          <li ng-if="<%=user.isPatient%>"><a href="/home"><i class="ti-home"></i><span>Home</span></a></li>
+                          <li ng-if="!<%=user.isPatient%>"><a href="/homeDash"><i class="ti-home"></i><span>Home</span></a></li>
+                          <li ng-if="<%=user.isPatient%>"><a href="/contact"><i class="ti-user"></i><span>Contact Details</span></a></li>
+                          <li class="active"><a ng-click="call()"><i class="fas fa-file-medical"></i><span>Medical Record</span></a></li>
+                          <li><a href="/prescription"><i class="fas fa-pills"></i> <span>Prescription</span></a></li>
+                      </ul>
+                  </nav>
+                </div>
+            </div>
+        </div>
+        <!-- sidebar menu area end -->
+        <!-- main content area start -->
+        <div class="main-content">
+            <!-- header area start -->
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <!-- nav and search button -->
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="search-box pull-left">
+                            <form action="#">
+                                <input type="text" name="search" placeholder="Search..." required>
+                                <i class="ti-search"></i>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- profile info & task notification -->
+                </div>
+            </div>
+            <!-- header area end -->
+            <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Home</h4>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="images/author/avatar.png" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><%= user.name %><i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/login/logout">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page title area end -->
+            <div class="main-content-inner">
+				<!-- here -->
+
+					<div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">View Medical Record</h4>
+                                <div class="exhcange-rate mt-5">
+                                  <div class="pp-form">
+                                  <h6>Enter patient's public key to view medical record</h6>
+                                  </div>
+                                    <form action="" method="post" onsubmit="return validation()">
+                  										<div class="input-group">
+                  											<div class="input-group-prepend">
+                  												<span class="input-group-text" id="basic-addon3">Public Key</span>
+                  											</div>
+                                        <input type="hidden" name="type" value="medical">
+                  											<input type="text" class="form-control" id="pkeyMedicalRecord" name="publickey" placeholder="Enter Public Key" aria-describedby="basic-addon3">
+                  										</div>
+                                      <span id="errorMpKey" class="error"></span>
+                                        <div class="pkey">
+											                      <button type="submit" class="btn btn-lg btn-primary mb-3">Get Medical Record List</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+					<!-- here -->
+            </div>
+        </div>
+        <!-- main content area end -->
+        <!-- footer area start-->
+        <footer>
+            <div class="footer-area">
+                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+            </div>
+        </footer>
+        <!-- footer area end-->
+    </div>
+    <!-- page container area end -->
+    <!-- offset area start -->
+    <!-- offset area end -->
+    <!-- jquery latest version -->
+    <script type="text/javascript">
+      var inputPublicKey = document.getElementById("pkeyMedicalRecord");
+      function validation() {
+          if(inputPublicKey.value == ""){
+            document.getElementById("errorMpKey").innerHTML ="Please enter patient's public key";
+            inputPublicKey.style.borderColor="red";
+            return false;
+          }else{
+            return true;
+          }
+
+      }
+    </script>
+    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+    <!-- bootstrap 4 js -->
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/metisMenu.min.js"></script>
+    <script src="js/jquery.slimscroll.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+
+    <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <!-- start highcharts js -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- start zingchart js -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+    </script>
+    <!-- all line chart activation -->
+    <script src="js/line-chart.js"></script>
+    <!-- all bar chart activation -->
+    <script src="js/bar-chart.js"></script>
+    <!-- all pie chart -->
+    <script src="js/pie-chart.js"></script>
+    <!-- others plugins -->
+    <script src="js/plugins.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+      window.app = angular.module('Medidata', []);
+
+      app.controller('MainController', function($scope, $http) {
+
+
+      });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,310 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MediData Blockchain Technology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="../images/icon/favicon.ico">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/themify-icons.css">
+    <link rel="stylesheet" href="../css/metisMenu.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+	<!-- others css -->
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/default-css.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <!-- modernizr css -->
+    <script src="../js/vendor/modernizr-2.8.3.min.js"></script>
+	<script src="https://kit.fontawesome.com/dab481675a.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+</head>
+
+<body ng-app="Medidata">
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- page container area start -->
+    <div class="page-container" ng-controller="MainController" ng-init="call()">
+        <!-- sidebar menu area start -->
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <!--a href="#"><h3>MediData Blockchain Technology</h3></a-->
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                  <nav>
+                      <ul class="metismenu" id="menu" ng-if="!<%=user.isPatient%>" >
+                          <li ng-if="!<%=user.isPatient%>"><a href="/homeDash"><i class="ti-home"></i><span>Home</span></a></li>
+                          <li class="active" ng-click="call()"><a href=""><i class="fas fa-file-medical"></i><span>Medical Record</span></a></li>
+                          <li><a href="/prescription"><i class="fas fa-pills"></i> <span>Prescription</span></a></li>
+                      </ul>
+                      <ul class="metismenu" id="menu" ng-if="<%=user.isPatient%>">
+                          <li><a href="/home"><i class="ti-home"></i><span>Home</span></a></li>
+                          <li><a href="/contact"><i class="ti-user"></i><span>Contact Details</span></a></li>
+                          <li class="active" ng-click="call()"><a href=""><i class="fas fa-file-medical"></i><span>Medical Record</span></a></li>
+                          <li><a href="/prescription/?id=<%=user.publickey%>"><i class="fas fa-pills"></i> <span>Prescription</span></a></li>
+                      </ul>
+                  </nav>
+
+                </div>
+            </div>
+        </div>
+        <!-- sidebar menu area end -->
+        <!-- main content area start -->
+        <div class="main-content">
+            <!-- header area start -->
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <!-- nav and search button -->
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- header area end -->
+            <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Medical Record</h4>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="../images/author/avatar.png" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><%= user.name%><i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/login/logout">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page title area end -->
+            <div class="main-content-inner">
+                <!-- order list area start -->
+				                <div class="card mt-5">
+                          <div class="card-body">
+						                      <div class="s-report-title d-flex justify-content-between add">
+							                             <h4 class="header-title" ng-if="(!addressData && initialSearchMade) || addressData">Past Medical Record List</h4>
+							                             <h4 class="header-title" ng-if="transaction">Medical Record Details</h4>
+							                             <a href="/addRecord/?id=<%=data%>" class="btn addBtn" ng-if="!<%=user.isPatient%>">Add New Medical Record</a>
+						                      </div>
+                        <div class="table-responsive">
+                            <table class="dbkit-table medical" ng-if="(!addressData && initialSearchMade) || addressData">
+									               <thead>
+                                   <tr>
+                        							<th scope="col">NO.</th>
+                        							<th scope="col">Date</th>
+                        							<th scope="col">Reference NO.</th>
+                        							<th scope="col">Title</th>
+                        						</tr>
+                                  </thead>
+									                <tbody>
+                                    <tr ng-if="!addressData && initialSearchMade"><td> No Medical Record found</td></tr>
+                                    <tr ng-repeat="transaction in addressData.addressTransactions" data-t="{{ transaction.transactionId }}" ng-click="getDetails($event)">
+                                        <td data-t="{{ transaction.transactionId }}">{{$index + 1}}</td>
+                                        <td data-t="{{ transaction.transactionId }}">{{ transaction.date }}</td>
+                                        <td data-t="{{ transaction.transactionId }}">{{ transaction.mID }}</td>
+                                        <td data-t="{{ transaction.transactionId }}">{{ transaction.title }}</td>
+                                    </tr>
+									                </tbody>
+                            </table>
+                            <!--medical record details-->
+                            <div class="card-area" ng-if="transaction">
+                        <div class="col-lg-12 col-md-6 mt-5">
+				                      <div class="card card-bordered">
+                                  <div class="card-body">
+              						                <div class="d-sm-flex flex-wrap justify-content-between mb-4 align-items-center">
+              							                       <h4 class="header-title mb-0">Medical Record Details</h4>
+                                          </div>
+              						                <div class="row">
+              							                  <div class="col-6">
+                                  								<table class="table">
+                                  									<tr>
+                                  										<td class="title-name"><h6>MID:<small class="text-muted"></small><h6></td>
+                                  										<td><h6><small class="text-muted">{{ transaction.mID }}</small><h6></td>
+                                  									</tr>
+                                  									<tr>
+                                  										<td class="title-name"><h6>Title:<small class="text-muted"></small><h6></td>
+                                  										<td><h6><small class="text-muted">{{ transaction.title }}</small><h6></td>
+                                  									</tr>
+                                  									<tr>
+                                  										<td class="title-name"><h6>Admission:<small class="text-muted"></small><h6></td>
+                                  										<td><h6><small class="text-muted">{{ data.admission }}</small><h6></td>
+                                  									</tr>
+                                  									<tr>
+                                  										<td class="title-name"><h6>Hospital Assigned:<small class="text-muted"></small><h6></td>
+                                  										<td><h6><small class="text-muted">{{ data.hospital }}</small><h6></td>
+                                  									</tr>
+                                  								</table>
+              							                  </div>
+                                							<div class="col-6">
+                                								<table class="table">
+                                									<tr>
+                                										<td class="title-name"><h6>Date:<small class="text-muted"></small><h6></td>
+                                										<td><h6><small class="text-muted">{{ transaction.date }}</small><h6></td>
+                                									</tr>
+                                									<tr>
+                                										<td class="title-name"><h6>Doctor Incharge:<small class="text-muted"></small><h6></td>
+                                										<td><h6><small class="text-muted">{{ data.doctorIncharge }}</small><h6></td>
+                                									</tr>
+                                									<tr>
+                                										<td class="title-name"><h6>Discharged Date:<small class="text-muted"></small><h6></td>
+                                										<td><h6><small class="text-muted">{{ data.discharge}}</small><h6></td>
+                                									</tr>
+                                								</table>
+                                							</div>
+              						                  </div>
+              						                  <div>
+                                							<table class="table">
+                                								<tr>
+                                									<td class="title-name"><h6>Description:<small class="text-muted"></small><h6></td>
+                                									<td><h6><small class="text-muted">
+                                										<p class="card-text">{{ data.description }}
+                                										</p><br></small><h6>
+                                									</td>
+                                								</tr>
+                                								<tr>
+                                									<td class="title-name"><h6>Notes:<small class="text-muted"></small><h6></td>
+                                									<td><h6><small class="text-muted">
+                                										<p class="card-text">{{ data.notes }}
+                                										</p><br></small><h6>
+                                									</td>
+                                								</tr>
+                                							</table>
+                                						</div>
+                                            <button class="btn addBtn" ng-click="call()">Back</button>
+                                      </div>
+                     </div>
+                </div>
+				</div>
+
+        <!--medical record details end here-->
+                        </div>
+
+                    </div>
+                </div>
+                <!-- order list area end -->
+            </div>
+        </div>
+        <!-- main content area end -->
+        <!-- footer area start-->
+        <footer>
+            <div class="footer-area">
+                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+            </div>
+        </footer>
+        <!-- footer area end-->
+    </div>
+    <!-- page container area end -->
+
+    <!-- jquery latest version -->
+    <script src="../js/vendor/jquery-2.2.4.min.js"></script>
+    <!-- bootstrap 4 js -->
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/metisMenu.min.js"></script>
+    <script src="../js/jquery.slimscroll.min.js"></script>
+    <script src="../js/jquery.slicknav.min.js"></script>
+
+    <script>
+  		window.app = angular.module('Medidata', []);
+
+  		app.controller('MainController', function($scope, $http) {
+  			$scope.block = null;
+  			$scope.transaction = null;
+  			$scope.addressData = null;
+        $scope.data = null;
+  			$scope.initialSearchMade = false;
+
+        $scope.fetchBlock = function(blockHash) {
+				$http.get(`/block/${blockHash}`)
+				.then(response => {
+					$scope.block = response.data.block;
+					$scope.transaction = null;
+					$scope.addressData = null;
+				});
+			};
+
+  			$scope.fetchAddressData = function(address) {
+  				$http.get(`/getMedicalRecord/?address=${address}`)
+  				.then(response => {
+  					$scope.addressData = response.data.addressData;
+  					if (!$scope.addressData.addressTransactions.length) $scope
+  						.addressData = null;
+  					$scope.block = null;
+  					$scope.transaction = null;
+  				});
+  			};
+
+        $scope.fetchTransaction = function(transactionId) {
+				$http.get(`/transaction/${transactionId}/?publickey=<%=data%>`)
+				.then(response => {
+					$scope.transaction = response.data.transaction;
+          $scope.data = response.data.data;
+					$scope.block = null;
+					$scope.addressData = null;
+          $scope.initialSearchMade = false;
+				    });
+			   };
+
+        //$scope.fetchAddressData("<%= data%>");
+        $scope.call = function(){
+          $scope.initialSearchMade = true;
+          $scope.fetchAddressData("<%= data%>");
+        };
+
+        $scope.getDetails = function($event){
+             var id = $($event.target).data('t');
+             $scope.fetchTransaction(id);
+        };
+
+
+  		});
+  	</script>
+
+    <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <!-- start highcharts js -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- start zingchart js -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+    </script>
+    <!-- all line chart activation -->
+    <script src="../js/line-chart.js"></script>
+    <!-- all bar chart activation -->
+    <script src="../js/bar-chart.js"></script>
+    <!-- all pie hart -->
+    <script src="../js/pie-chart.js"></script>
+    <!-- others plugins -->
+    <script src="../js/plugins.js"></script>
+    <script src="../js/scripts.js"></script>
+</body>
+
+</html>

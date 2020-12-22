@@ -1,0 +1,245 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MediData Blockchain Technology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="../images/icon/favicon.ico">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/themify-icons.css">
+    <link rel="stylesheet" href="../css/metisMenu.css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+	<!-- others css -->
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/default-css.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <!-- modernizr css -->
+    <script src="../js/vendor/modernizr-2.8.3.min.js"></script>
+	<script src="https://kit.fontawesome.com/dab481675a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- page container area start -->
+    <div class="page-container">
+        <!-- sidebar menu area start -->
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <!--a href="#"><h3>MediData Blockchain Technology</h3></a-->
+                </div>
+            </div>
+            <div class="main-menu">
+                <div class="menu-inner">
+                  <nav>
+                      <ul class="metismenu" id="menu">
+                          <li><a href="/homeDash"><i class="ti-home"></i><span>Home</span></a></li>
+                          <li class="active"><a href="/medicalRecord"><i class="fas fa-file-medical"></i><span>Medical Record</span></a></li>
+                          <li><a href="/prescription"><i class="fas fa-pills"></i> <span>Prescription</span></a></li>
+                      </ul>
+                  </nav>
+                </div>
+            </div>
+        </div>
+        <!-- sidebar menu area end -->
+        <!-- main content area start -->
+        <div class="main-content">
+            <!-- header area start -->
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <!-- nav and search button -->
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="search-box pull-left">
+                            <form action="#">
+                                <input type="text" name="search" placeholder="Search..." required>
+                                <i class="ti-search"></i>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- profile info & task notification -->
+                </div>
+            </div>
+            <!-- header area end -->
+            <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Medical Record</h4>
+							     <ul class="breadcrumbs pull-left">
+                                     <li><a href="/medicalRecord">Medical Record</a></li>
+                                     <li><span>Add New Medical Record</span></li>
+                                  </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="../images/author/avatar.png" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><%=user.name%> <i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/login/logout">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page title area end -->
+            <div class="main-content-inner">
+				<!-- here -->
+				<div class="card-area">
+                        <div class="col mt-5">
+				<div class="card card-bordered">
+                    <div class="card-body">
+						<div class="d-sm-flex flex-wrap justify-content-between mb-4 align-items-center">
+							<h4 class="header-title mb-0">Add New Medical Record</h4>
+                        </div>
+						<form action="" method="POST" onsubmit="return validation()">
+						  <div class="row">
+							<div class="col-6">
+								<table class="table">
+									<tr>
+										<div class="form-group">
+                        <td><label for="mID" class="col-form-label">MID</label></td>
+                        <td><input class="form-control" value="M<%= mid%>" type="text" id="mID" name="mID" readonly></td>
+                    </div>
+									</tr>
+									<tr>
+										<div class="form-group">
+                        <td><label for="title" class="col-form-label">Title</label></td>
+                        <td><input class="form-control" type="text" id="title" name="title" placeholder="Eg. Fever">
+										                <div id="errorTitle" class="text-danger"></div>
+                        </td>
+                    </div>
+									</tr>
+									<tr>
+										<div class="form-group">
+                        <td><label for="admission" class="col-form-label">Admission</label></td>
+                        <td><input class="form-control" type="date" id="admission" name="admission"></td>
+                    </div>
+									</tr>
+
+								</table>
+							</div>
+							<div class="col-6">
+								<table class="table">
+									<tr>
+										<div class="form-group">
+                          <td><label for="todayDate" class="col-form-label">Date</label></td>
+                          <td><input class="form-control" type="text" name="todayDate" value="<%= date%>" id="todayDate" readonly></td>
+                    </div>
+									</tr>
+									<tr>
+										<div class="form-group">
+                        <td><label for="doctorIncharge" class="col-form-label">Doctor Incharge</label></td>
+                        <td><input class="form-control" value="<%= user.name %>" name="doctorIncharge" type="text" id="doctorIncharge" readonly></td>
+                    </div>
+									</tr>
+									<tr>
+										<div class="form-group">
+                        <td><label for="discharge" class="col-form-label">Discharged Date:</label></td>
+                        <td><input class="form-control" type="date" name="discharge" id="discharge"></td>
+                    </div>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div>
+							<table class="table ">
+								<tr>
+
+									<div class="form-group">
+                                        <td class="title-name"><label for="description" class="col-form-label">Description</label></td>
+                                        <td><textarea class="form-control" name="description" type="text" id="description"></textarea>
+										<div id="errorDescription" class="text-danger"></div></td>
+
+									</div>
+
+
+								</tr>
+								<tr>
+									<div class="form-group">
+                                        <td class="title-name"><label for="notes" class="col-form-label">Notes</label></td>
+                                        <td><textarea class="form-control" type="text" name="notes" id="notes"></textarea></td>
+                                    </div>
+								</tr>
+							</table>
+						</div>
+								<a href="/medicalRecord/?id=<%= id%>" class="btn btn-outline-primary">Back</a>
+								<!--button type="submit" class="btn btn-primary">Add Medical Record</button-->
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Medical Record</button>
+
+                <%- include ('./partials/modalForPrivatekey.ejs') %>
+							</form>
+                        </div>
+                     </div>
+                </div>
+				</div>
+				</div>
+				<!-- here -->
+            </div>
+
+        <!-- main content area end -->
+        <!-- footer area start-->
+        <footer>
+            <div class="footer-area">
+                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+            </div>
+        </footer>
+        <!-- footer area end-->
+    </div>
+    <!-- page container area end -->
+    <!-- offset area start -->
+    <!-- offset area end -->
+    <!-- jquery latest version -->
+    <script src="../js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="../js/addHealthRecord.js"></script>
+    <!-- bootstrap 4 js -->
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/metisMenu.min.js"></script>
+    <script src="../js/jquery.slimscroll.min.js"></script>
+    <script src="../js/jquery.slicknav.min.js"></script>
+
+    <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <!-- start highcharts js -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- start zingchart js -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+    </script>
+    <!-- all line chart activation -->
+    <script src="../js/line-chart.js"></script>
+    <!-- all bar chart activation -->
+    <script src="../js/bar-chart.js"></script>
+    <!-- all pie chart -->
+    <script src="../js/pie-chart.js"></script>
+    <!-- others plugins -->
+    <script src="../js/plugins.js"></script>
+    <script src="../js/scripts.js"></script>
+</body>
+
+</html>
